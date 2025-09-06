@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend2
+    container_name: backend_service
+    ports:
+      - "8080:8080"   # Spring Boot default
+      # - "3000:3000" # Uncomment if Node.js server.js instead
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend2
+    container_name: frontend_service
+    ports:
+      - "8081:80"     # Access frontend via http://localhost:8081
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
